@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -45,6 +46,7 @@ dependencies {
     // Hilt ( Dependency Injection )
     // Hilt Version Project gradle tarfında belirtildi
     implementation("com.google.dagger:hilt-android:$hilt_version")
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
 
     // MultiDex

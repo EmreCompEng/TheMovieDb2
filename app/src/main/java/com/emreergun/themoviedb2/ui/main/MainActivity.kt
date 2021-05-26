@@ -1,7 +1,8 @@
-package com.emreergun.themoviedb2
+package com.emreergun.themoviedb2.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.emreergun.themoviedb2.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
