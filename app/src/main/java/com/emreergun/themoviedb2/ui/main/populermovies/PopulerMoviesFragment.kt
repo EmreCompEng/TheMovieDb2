@@ -6,17 +6,31 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.emreergun.themoviedb2.R
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PopulerMoviesFragment : Fragment(R.layout.fragment_populer_movies) {
 
+    private lateinit var recyclerView: RecyclerView
+
     // Injecte olacak
     private val viewModel: PopulerMoviesViewModel by viewModels()
 
+    @Inject
+    lateinit var adapter: PopulerMoviesAdapter
+
+    @Inject
+    lateinit var gridLayManager: GridLayoutManager
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recyclerView=view.findViewById(R.id.populer_recycler_view)
+        recyclerView.layoutManager=gridLayManager
+        recyclerView.adapter=adapter
 
         viewModel.observePopulerMovies()
         viewModel.moviesLiveData.observe(viewLifecycleOwner,{
@@ -26,6 +40,8 @@ class PopulerMoviesFragment : Fragment(R.layout.fragment_populer_movies) {
                 }
                 MovieResource.MovieStatus.SUCCESS->{
                     Log.d(TAG, "onViewCreated: SUCCESS...")
+                    adapter.setpopulerMovieList(it.data!!.results)
+
                 }
                 MovieResource.MovieStatus.ERROR->{
                     Log.d(TAG, "onViewCreated: ERROR... => ${it.message}")
