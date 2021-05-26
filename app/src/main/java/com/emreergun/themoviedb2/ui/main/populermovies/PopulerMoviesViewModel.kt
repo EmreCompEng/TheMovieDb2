@@ -27,27 +27,7 @@ class PopulerMoviesViewModel @Inject constructor(
 
     // Fetch data in repostiory with retrofit http
     fun observePopulerMovies(){
-        _moviesLiveData.value=MovieResource.Loading() // Loading....
-        repository.getPopulerMovies(1)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : DisposableObserver<PopulerMovies>() {
-                override fun onNext(populerMovies: PopulerMovies) {
-                    _moviesLiveData.value=MovieResource.Success(populerMovies)  // Successs....
-                }
-
-                override fun onError(error: Throwable) {
-                    _moviesLiveData.value=MovieResource.Error("error :${error.message}") // Error.....
-                }
-
-                override fun onComplete() {
-
-
-                }
-
-            })
-
-
+        zipObservable()
     }
 
     // Sıralı Birleştirme

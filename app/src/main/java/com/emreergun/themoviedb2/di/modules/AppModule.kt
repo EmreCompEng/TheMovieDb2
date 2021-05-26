@@ -53,6 +53,8 @@ object AppModule {
     fun provideRequestOpitons(): RequestOptions {
         return RequestOptions
             .placeholderOf(R.drawable.ic_emre_logo)
+            .fitCenter()
+            //.optionalFitCenter()
     }
 
     @Singleton

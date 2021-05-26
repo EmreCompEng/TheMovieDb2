@@ -1,6 +1,5 @@
 package com.emreergun.themoviedb2.ui.main.populermovies
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -40,7 +39,7 @@ class PopulerMoviesFragment : Fragment(R.layout.fragment_populer_movies) {
                 }
                 MovieResource.MovieStatus.SUCCESS->{
                     Log.d(TAG, "onViewCreated: SUCCESS...")
-                    adapter.setpopulerMovieList(it.data!!.results)
+                    adapter.addPopulerMovieList(it.data!!.results)
 
                 }
                 MovieResource.MovieStatus.ERROR->{

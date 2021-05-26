@@ -24,9 +24,9 @@ class PopulerMoviesAdapter @Inject constructor(
 ):RecyclerView.Adapter<PopulerMoviesViewHolder>() {
 
 
-    private var movieList= emptyList<Result>() // created empty array
-    fun setpopulerMovieList(list:List<Result>){
-        movieList=list;
+    private var movieList= mutableListOf<Result>() // created empty array
+    fun addPopulerMovieList(list:List<Result>){
+        movieList.addAll(list)
         notifyDataSetChanged() // yeni liste için adapter güncelle
     }
 
