@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/populerMoviesFragment"
+        android:title="@string/populer_movies_str"
+        android:icon="@drawable/ic_home"
+        />
+
+    <item android:id="@+id/favoriteMoviesFragment"
+        android:title="@string/favorites_str"
+        android:icon="@drawable/ic_fav_empty" />
+
+</menu>

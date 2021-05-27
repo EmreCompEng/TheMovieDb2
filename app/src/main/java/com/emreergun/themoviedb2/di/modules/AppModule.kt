@@ -72,13 +72,6 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providePopulerMoviesAdapter(requestManager: RequestManager,moviesRepository: MoviesRepository): PopulerMoviesAdapter {
-        return PopulerMoviesAdapter(requestManager,moviesRepository)
-    }
-
-
-    @Singleton
-    @Provides
     fun provideGridLayoutManager(application: Application): GridLayoutManager {
         return GridLayoutManager(application, 2, GridLayoutManager.VERTICAL, false)
     }

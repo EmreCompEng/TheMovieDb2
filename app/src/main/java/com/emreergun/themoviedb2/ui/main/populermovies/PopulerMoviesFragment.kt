@@ -9,9 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emreergun.themoviedb2.R
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -19,7 +19,7 @@ class PopulerMoviesFragment : Fragment(R.layout.fragment_populer_movies) {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: CircularProgressIndicator
-    private lateinit var morePopMoviesBtn: MaterialButton
+
 
     // Injecte olacak
     private val viewModel: PopulerMoviesViewModel by viewModels()
@@ -30,54 +30,65 @@ class PopulerMoviesFragment : Fragment(R.layout.fragment_populer_movies) {
     @Inject
     lateinit var gridLayManager: GridLayoutManager
 
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause: ")
+        recyclerView.layoutManager=null
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setViews(view)
+        initViews(view)
 
         viewModel.observePopulerMovies()
-        viewModel.moviesLiveData.observe(viewLifecycleOwner,{
-            when(it.status){
-                MovieResource.MovieStatus.LOADING->{
+        viewModel.moviesLiveData.observe(viewLifecycleOwner, {
+            when (it.status) {
+                MovieResource.MovieStatus.LOADING -> {
                     Log.d(TAG, "onViewCreated: LOADING...")
-                    progressBar.isVisible=true
+
+                    setLoadingViews(true)
                 }
-                MovieResource.MovieStatus.SUCCESS->{
+                MovieResource.MovieStatus.SUCCESS -> {
                     Log.d(TAG, "onViewCreated: SUCCESS...")
                     adapter.addPopulerMovieList(it.data!!.results)
-                    progressBar.isVisible=false
 
+
+                    setLoadingViews(false)
                 }
-                MovieResource.MovieStatus.ERROR->{
+                MovieResource.MovieStatus.ERROR -> {
                     Log.d(TAG, "onViewCreated: ERROR... => ${it.message}")
-                    progressBar.isVisible=false
+
+                    setLoadingViews(false)
                 }
             }
         })
 
-        // Add new Populer Pages
-        morePopMoviesBtn.setOnClickListener {
-            viewModel.observePopulerMovies()
-        }
 
         //Detech Last Of recyclerview satate
-        recyclerView.addOnScrollListener(object:RecyclerView.OnScrollListener(){
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                morePopMoviesBtn.isVisible = !recyclerView.canScrollVertically(1)
+                val isEndOfPage = !recyclerView.canScrollVertically(1)
+                if (isEndOfPage) {
+                    viewModel.observePopulerMovies()
+                }
             }
         })
-
 
 
     }
 
-    private fun setViews(view: View) {
-        progressBar=view.findViewById(R.id.populer_circularProgress)
-        morePopMoviesBtn=view.findViewById(R.id.more_populer_material_btn)
-        recyclerView=view.findViewById(R.id.populer_recycler_view)
-        recyclerView.layoutManager=gridLayManager
-        recyclerView.adapter=adapter
+    private fun setLoadingViews(isLoading: Boolean) {
+        progressBar.isVisible = isLoading
+    }
+
+    private fun initViews(view: View) {
+        progressBar = view.findViewById(R.id.populer_circularProgress)
+        recyclerView = view.findViewById(R.id.populer_recycler_view)
+        recyclerView.layoutManager = gridLayManager
+        recyclerView.adapter = adapter
     }
 
     companion object {
