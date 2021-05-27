@@ -7,22 +7,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.RequestManager
 import com.emreergun.themoviedb2.R
 import com.emreergun.themoviedb2.models.populermovies.Result
 import com.emreergun.themoviedb2.repostiory.MoviesRepository
 import com.emreergun.themoviedb2.util.Constants
-import com.emreergun.themoviedb2.util.PrefManager
-import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlin.math.log
 
 class PopulerMoviesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val movieImage: ImageView = view.findViewById(R.id.image_imgv_populer)
-    val movieFavorite: ImageView = view.findViewById(R.id.favorite_img_populer)
-    val movieTitle: TextView = view.findViewById(R.id.name_txt_populer)
-    val movieDate: TextView = view.findViewById(R.id.date_txt_populer)
+    val movieImage: ImageView = view.findViewById(R.id.movieImage)
+    val movieFavorite: ImageView = view.findViewById(R.id.favButton)
+    val movieTitle: TextView = view.findViewById(R.id.movieName)
+    val movieDate: TextView = view.findViewById(R.id.movieDate)
 
 }
 
@@ -33,14 +29,14 @@ class PopulerMoviesAdapter @Inject constructor(
 
     private var movieList = mutableListOf<Result>() // created empty array
     fun addPopulerMovieList(list: List<Result>) {
-        movieList.addAll(list)
+        movieList.addAll(list) // Yeni Liste Ekle
         notifyDataSetChanged() // yeni liste için adapter güncelle
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopulerMoviesViewHolder {
         val root =
-            LayoutInflater.from(parent.context).inflate(R.layout.populer_movie_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.populer_movie_item2, parent, false)
         return PopulerMoviesViewHolder(root)
 
     }
@@ -48,6 +44,20 @@ class PopulerMoviesAdapter @Inject constructor(
     override fun onBindViewHolder(holder: PopulerMoviesViewHolder, position: Int) {
         val movie = movieList[position] // current movie
 
+        // Set All Data in Views
+        setViews(holder, movie)
+
+        // Fav Button Click Listener
+        holder.movieFavorite.setOnClickListener {
+            moviesRepository.favButtonClicked(movie)
+            notifyItemChanged(position)
+        }
+
+
+
+    }
+
+    private fun setViews(holder: PopulerMoviesViewHolder, movie: Result) {
         // Image
         requestManager
             .load(Constants.IMAGE_PREV_PATH + movie.posterPath)
@@ -58,11 +68,6 @@ class PopulerMoviesAdapter @Inject constructor(
 
         // Date
         holder.movieDate.text = movie.releaseDate
-
-        // Favorite  View
-        requestManager
-            .load(R.drawable.ic_fav_empty)
-            .into(holder.movieFavorite)
 
         // Check is Favorite
         // Eğer Favori ise
@@ -76,14 +81,6 @@ class PopulerMoviesAdapter @Inject constructor(
                 .load(R.drawable.ic_fav_empty)
                 .into(holder.movieFavorite)
         }
-
-        holder.movieFavorite.setOnClickListener {
-            moviesRepository.favButtonClicked(movie)
-            notifyItemChanged(position)
-        }
-
-
-
     }
 
     override fun getItemCount(): Int {

@@ -31,19 +31,21 @@ class PopulerMoviesViewModel @Inject constructor(
     }
 
     // Sıralı Birleştirme
+    private var currentPage=1
     private fun zipObservable() {
         _moviesLiveData.value=MovieResource.Loading()
         Observable
             .merge(
-                repository.getPopulerMovies(1),
-                repository.getPopulerMovies(2),
-                repository.getPopulerMovies(3),
-                repository.getPopulerMovies(4),
+                repository.getPopulerMovies(currentPage),
+                repository.getPopulerMovies(currentPage+1),
+                repository.getPopulerMovies(currentPage+2),
+                repository.getPopulerMovies(currentPage+3),
             )
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(object :DisposableObserver<PopulerMovies>(){
                 override fun onNext(populerMovies: PopulerMovies) {
+                    Log.d(TAG, "onNext: Current Page $currentPage")
                     _moviesLiveData.value=MovieResource.Success(populerMovies)  // Successs....
                 }
 
@@ -53,6 +55,8 @@ class PopulerMoviesViewModel @Inject constructor(
 
                 override fun onComplete() {
                     Log.d(TAG, "onComplete: ")
+                    Log.d(TAG, "onComplete: Last Page :$currentPage")
+                    currentPage+=4
                 }
 
             })

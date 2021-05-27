@@ -1,13 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.populermovies.PopulerMoviesFragment">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/populer_recycler_view"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="@color/black"
+            android:id="@+id/populer_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/more_populer_material_btn"
+            android:layout_width="236dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:text="More Populer Movies"
+            app:backgroundTint="@color/yellow"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/populer_recycler_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent">
+        </com.google.android.material.button.MaterialButton>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/populer_circularProgress"
+            android:layout_width="94dp"
+            android:layout_height="90dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/yellow"
+            app:layout_constraintBottom_toBottomOf="@+id/populer_recycler_view"
+            app:layout_constraintEnd_toEndOf="@+id/populer_recycler_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/populer_recycler_view">
+
+        </com.google.android.material.progressindicator.CircularProgressIndicator>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>

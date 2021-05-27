@@ -18,14 +18,7 @@ class MoviesRepository @Inject constructor(
     fun getPopulerMovies(pageNumber:Int=1): Observable<PopulerMovies> {
         return movieApi.getPopulerMovies(Constants.API_KEY,pageNumber)
     }
-
     // Favorite Movie With Pref-----
-    fun setFavoriteMovie(movie:Result){
-        prefManager.setFavoriteMovie(movieId = movie.id.toString())
-    }
-    fun deleteFavoriteMovie(movie: Result){
-        prefManager.deleteFavoriteMovie(movieId = movie.id.toString())
-    }
     fun favButtonClicked(movie: Result){
         // Eğer Film Favori ise listeden çıkar
         if (checkIsFavoriteMovie(movie)){
@@ -37,7 +30,6 @@ class MoviesRepository @Inject constructor(
     fun checkIsFavoriteMovie(movie: Result): Boolean {
         return prefManager.checkIsFavorite(movieId = movie.id.toString())
     }
-    // Favorite Movie With Pref-----
 
 
 
