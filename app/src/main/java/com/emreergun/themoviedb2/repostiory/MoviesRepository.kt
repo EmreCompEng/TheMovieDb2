@@ -27,10 +27,16 @@ class MoviesRepository @Inject constructor(
         else
             prefManager.setFavoriteMovie(movie.id.toString())
     }
+
+    fun getFavoriteMovies() {
+        // TODO buradan favori filmler geri döndürülecek buradan devam et !!!
+
+    }
     fun checkIsFavoriteMovie(movie: Result): Boolean {
         return prefManager.checkIsFavorite(movieId = movie.id.toString())
     }
 
+    // Git control
 
 
 

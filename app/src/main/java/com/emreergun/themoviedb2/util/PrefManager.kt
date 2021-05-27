@@ -38,11 +38,10 @@ class PrefManager @Inject constructor(
         saveMovieList(favoriteList)
     }
 
-    private fun getFavoriteMovieList(): Array<String> {
+    fun getFavoriteMovieList(): Array<String> {
         val jsonText: String = sharedPrefs.getString(Constants.FAVORITE_MOVIE_KEY_PREF, null).toString()
         val list = gson.fromJson(jsonText, Array<String>::class.java) //EDIT: gso to gson
         return list ?: emptyArray()
-
     }
     private fun saveMovieList(list: Array<String>){
         val jsonText = gson.toJson(list)
