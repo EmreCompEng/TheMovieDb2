@@ -6,4 +6,9 @@ object Constants {
 
     const val IMAGE_PREV_PATH="https://image.tmdb.org/t/p/original"
 
+
+    // Pref Manager
+    const val FAVORITE_MOVIE_KEY_PREF = "FAVORITE_MOVIE_KEY_PREF_TMDB2"
+    const val PREF_NAME = "THE_MOVIEDB_PREF_NAME_TMDB2"
+
 }

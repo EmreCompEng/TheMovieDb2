@@ -11,7 +11,9 @@ import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.RequestManager
 import com.emreergun.themoviedb2.R
 import com.emreergun.themoviedb2.models.populermovies.Result
+import com.emreergun.themoviedb2.repostiory.MoviesRepository
 import com.emreergun.themoviedb2.util.Constants
+import com.emreergun.themoviedb2.util.PrefManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.math.log
@@ -25,7 +27,8 @@ class PopulerMoviesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 }
 
 class PopulerMoviesAdapter @Inject constructor(
-    private val requestManager: RequestManager
+    private val requestManager: RequestManager,
+    private val moviesRepository: MoviesRepository
 ) : RecyclerView.Adapter<PopulerMoviesViewHolder>() {
 
     private var movieList = mutableListOf<Result>() // created empty array
@@ -56,10 +59,30 @@ class PopulerMoviesAdapter @Inject constructor(
         // Date
         holder.movieDate.text = movie.releaseDate
 
-        // Favorite View
+        // Favorite  View
         requestManager
             .load(R.drawable.ic_fav_empty)
             .into(holder.movieFavorite)
+
+        // Check is Favorite
+        // Eğer Favori ise
+        if (moviesRepository.checkIsFavoriteMovie(movie)){
+            requestManager
+                .load(R.drawable.ic_fav_colored)
+                .into(holder.movieFavorite)
+        }
+        else{
+            requestManager
+                .load(R.drawable.ic_fav_empty)
+                .into(holder.movieFavorite)
+        }
+
+        holder.movieFavorite.setOnClickListener {
+            moviesRepository.favButtonClicked(movie)
+            notifyItemChanged(position)
+        }
+
+
 
     }
 

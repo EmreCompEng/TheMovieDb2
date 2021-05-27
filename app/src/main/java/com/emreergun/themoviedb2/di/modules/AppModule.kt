@@ -11,6 +11,8 @@ import com.emreergun.themoviedb2.network.MovieApi
 import com.emreergun.themoviedb2.repostiory.MoviesRepository
 import com.emreergun.themoviedb2.ui.main.populermovies.PopulerMoviesAdapter
 import com.emreergun.themoviedb2.util.Constants
+import com.emreergun.themoviedb2.util.PrefManager
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,8 +39,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideMovieSRepository(movieApi: MovieApi): MoviesRepository {
-        return MoviesRepository(movieApi)
+    fun provideMovieSRepository(movieApi: MovieApi,prefManager: PrefManager): MoviesRepository {
+        return MoviesRepository(movieApi,prefManager)
     }
 
 
@@ -70,8 +72,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providePopulerMoviesAdapter(requestManager: RequestManager): PopulerMoviesAdapter {
-        return PopulerMoviesAdapter(requestManager)
+    fun providePopulerMoviesAdapter(requestManager: RequestManager,moviesRepository: MoviesRepository): PopulerMoviesAdapter {
+        return PopulerMoviesAdapter(requestManager,moviesRepository)
     }
 
 
@@ -80,6 +82,23 @@ object AppModule {
     fun provideGridLayoutManager(application: Application): GridLayoutManager {
         return GridLayoutManager(application, 2, GridLayoutManager.VERTICAL, false)
     }
+
+
+
+    @Singleton
+    @Provides
+    fun providGson(): Gson {
+        return Gson()
+    }
+
+    @Singleton
+    @Provides
+    fun providePrefManager(application: Application,gson: Gson): PrefManager {
+        return PrefManager(application,gson)
+    }
+
+
+
 
 
 }

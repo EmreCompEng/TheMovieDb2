@@ -1,18 +1,45 @@
 package com.emreergun.themoviedb2.repostiory
 
 import com.emreergun.themoviedb2.models.populermovies.PopulerMovies
+import com.emreergun.themoviedb2.models.populermovies.Result
 import com.emreergun.themoviedb2.network.MovieApi
 import com.emreergun.themoviedb2.util.Constants
+import com.emreergun.themoviedb2.util.PrefManager
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
 class MoviesRepository @Inject constructor(
-    private val movieApi:MovieApi
+    private val movieApi:MovieApi,
+    private val prefManager: PrefManager
 ){
 
     // Get All Populer Movies
     fun getPopulerMovies(pageNumber:Int=1): Observable<PopulerMovies> {
         return movieApi.getPopulerMovies(Constants.API_KEY,pageNumber)
     }
+
+    // Favorite Movie With Pref-----
+    fun setFavoriteMovie(movie:Result){
+        prefManager.setFavoriteMovie(movieId = movie.id.toString())
+    }
+    fun deleteFavoriteMovie(movie: Result){
+        prefManager.deleteFavoriteMovie(movieId = movie.id.toString())
+    }
+    fun favButtonClicked(movie: Result){
+        // Eğer Film Favori ise listeden çıkar
+        if (checkIsFavoriteMovie(movie)){
+            prefManager.deleteFavoriteMovie(movie.id.toString())
+        }
+        else
+            prefManager.setFavoriteMovie(movie.id.toString())
+    }
+    fun checkIsFavoriteMovie(movie: Result): Boolean {
+        return prefManager.checkIsFavorite(movieId = movie.id.toString())
+    }
+    // Favorite Movie With Pref-----
+
+
+
+
 }
