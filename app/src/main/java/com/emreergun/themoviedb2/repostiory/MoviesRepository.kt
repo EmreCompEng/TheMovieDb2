@@ -22,18 +22,17 @@ class MoviesRepository @Inject constructor(
     fun favButtonClicked(movie: Result){
         // Eğer Film Favori ise listeden çıkar
         if (checkIsFavoriteMovie(movie)){
-            prefManager.deleteFavoriteMovie(movie.id.toString())
+            prefManager.deleteFavoriteMovie(movie)
         }
         else
-            prefManager.setFavoriteMovie(movie.id.toString())
+            prefManager.setFavoriteMovie(movie)
     }
 
-    fun getFavoriteMovies() {
-        // TODO buradan favori filmler geri döndürülecek buradan devam et !!!
-
+    fun getFavoriteMovies(): Array<Result> {
+        return prefManager.getFavoriteMovieList()
     }
     fun checkIsFavoriteMovie(movie: Result): Boolean {
-        return prefManager.checkIsFavorite(movieId = movie.id.toString())
+        return prefManager.checkIsFavorite(movie)
     }
 
     // Git control

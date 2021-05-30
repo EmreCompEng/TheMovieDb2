@@ -1,6 +1,7 @@
 package com.emreergun.themoviedb2.ui.main.populermovies
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
@@ -31,16 +32,12 @@ class PopulerMoviesFragment : Fragment(R.layout.fragment_populer_movies) {
     lateinit var gridLayManager: GridLayoutManager
 
 
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "onPause: ")
-        recyclerView.layoutManager=null
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews(view)
+
+
 
         viewModel.observePopulerMovies()
         viewModel.moviesLiveData.observe(viewLifecycleOwner, {

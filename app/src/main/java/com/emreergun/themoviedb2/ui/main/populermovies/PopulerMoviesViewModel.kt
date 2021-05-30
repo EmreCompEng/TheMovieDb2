@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.emreergun.themoviedb2.models.populermovies.PopulerMovies
 import com.emreergun.themoviedb2.repostiory.MoviesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

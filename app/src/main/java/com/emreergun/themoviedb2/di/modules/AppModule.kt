@@ -72,14 +72,6 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideGridLayoutManager(application: Application): GridLayoutManager {
-        return GridLayoutManager(application, 2, GridLayoutManager.VERTICAL, false)
-    }
-
-
-
-    @Singleton
-    @Provides
     fun providGson(): Gson {
         return Gson()
     }
