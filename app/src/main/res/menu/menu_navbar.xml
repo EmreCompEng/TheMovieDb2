@@ -3,7 +3,7 @@
 
     <item android:id="@+id/populerMoviesFragment"
         android:title="@string/populer_movies_str"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_home_empty"
         />
 
     <item android:id="@+id/favoriteMoviesFragment"

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.emreergun.themoviedb2.R
+import com.emreergun.themoviedb2.models.populermovies.PopulerMovies
 import com.emreergun.themoviedb2.models.populermovies.Result
 import com.emreergun.themoviedb2.repostiory.MoviesRepository
 import com.emreergun.themoviedb2.util.Constants
@@ -32,6 +33,7 @@ class PopulerMoviesAdapter @Inject constructor(
         movieList.addAll(list) // Yeni Liste Ekle
         notifyDataSetChanged() // yeni liste için adapter güncelle
     }
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopulerMoviesViewHolder {

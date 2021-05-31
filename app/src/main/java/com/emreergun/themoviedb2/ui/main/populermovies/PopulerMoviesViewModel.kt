@@ -49,7 +49,7 @@ class PopulerMoviesViewModel @Inject constructor(
             .subscribe(object : DisposableObserver<PopulerMovies>() {
                 override fun onNext(populerMovies: PopulerMovies) {
                     Log.d(TAG, "onNext: Current Page $currentPage")
-                    _moviesLiveData.value = MovieResource.Success(populerMovies)  // Successs....
+                    _moviesLiveData.value= MovieResource.Success(populerMovies)  // Successs....
                 }
 
                 override fun onError(error: Throwable) {

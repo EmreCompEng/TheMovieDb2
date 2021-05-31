@@ -2,6 +2,7 @@ package com.emreergun.themoviedb2.ui.main.populermovies
 
 import android.os.Bundle
 import android.os.Parcelable
+import android.service.autofill.Dataset
 import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
@@ -10,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emreergun.themoviedb2.R
+import com.emreergun.themoviedb2.models.populermovies.Result
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
@@ -32,11 +34,9 @@ class PopulerMoviesFragment : Fragment(R.layout.fragment_populer_movies) {
     lateinit var gridLayManager: GridLayoutManager
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews(view)
-
 
 
         viewModel.observePopulerMovies()
@@ -50,8 +50,6 @@ class PopulerMoviesFragment : Fragment(R.layout.fragment_populer_movies) {
                 MovieResource.MovieStatus.SUCCESS -> {
                     Log.d(TAG, "onViewCreated: SUCCESS...")
                     adapter.addPopulerMovieList(it.data!!.results)
-
-
                     setLoadingViews(false)
                 }
                 MovieResource.MovieStatus.ERROR -> {
@@ -90,6 +88,8 @@ class PopulerMoviesFragment : Fragment(R.layout.fragment_populer_movies) {
 
     companion object {
         private const val TAG = "PopulerMoviesFragment"
+        private const val SAVED_RECYCLER_VIEW_STATUS_ID = "SAVED_RECYCLER_VIEW_STATUS_ID"
+        private const val SAVED_RECYCLER_VIEW_DATASET_ID = "SAVED_RECYCLER_VIEW_DATASET_ID"
     }
 
 }

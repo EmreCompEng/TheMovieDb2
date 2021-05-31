@@ -29,7 +29,7 @@ class MoviesRepository @Inject constructor(
     }
 
     fun getFavoriteMovies(): Array<Result> {
-        return prefManager.getFavoriteMovieList()
+        return prefManager.getFavoriteMovieList().reversed().toTypedArray()
     }
     fun checkIsFavoriteMovie(movie: Result): Boolean {
         return prefManager.checkIsFavorite(movie)

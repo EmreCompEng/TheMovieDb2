@@ -49,9 +49,11 @@
         android:layout_gravity="start"
         android:background="@android:color/black"
         app:itemIconTint="@color/yellow"
+        app:itemRippleColor="@color/yellow"
         app:itemTextColor="@color/yellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/main_nav_host_fragment"
         app:layout_constraintTop_toBottomOf="@+id/main_nav_host_fragment"
         app:menu="@menu/menu_navbar" />
